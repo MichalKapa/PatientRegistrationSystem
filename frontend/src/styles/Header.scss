@@ -1,0 +1,20 @@
+@import "./Base.scss";
+
+#header {
+    background-color: $color_header;
+    height: 80px;
+
+    li {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    ul {
+        display: flex;
+        justify-content: space-around;
+        height: 100%;
+        margin: 0;
+    }
+}
