@@ -1,0 +1,25 @@
+@import './Base.scss';
+
+#contact_page {
+    .info_box{
+        background-color: $color_gray_info;
+        width: 510px;
+        height: 500px;
+        border-radius: 30px;
+        padding: 20px;
+        margin: auto;
+
+        h1, h2 {
+            text-align: center;            
+        }
+
+        h1 {
+            color: $color_gray_text;
+        }
+
+        h2 {
+            color: white;
+            font-size: 32px;
+        }
+    }
+}

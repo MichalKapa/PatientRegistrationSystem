@@ -1,11 +1,8 @@
 import "../styles/Header.scss";
-import { useLocation } from 'react-router-dom';
 import HeaderButton from "./HeaderButton";
 
 const Header = () => {
     const user: string = 'g'
-    const location = useLocation();
-
     switch(user) {
         case 'p': {
             return (
