@@ -4,6 +4,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Contact from './pages/Contact';
 import Booking from './pages/Booking';
+import Terms from './pages/Terms';
 import {Routes, Route} from "react-router-dom";
 import "./styles/Base.scss"
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/contact" element={<Contact/>} />
         <Route path="/booking/:id" element={<Booking/>} />
+        <Route path="/terms" element={<Terms/>} />
       </Routes>
     </div>
   );

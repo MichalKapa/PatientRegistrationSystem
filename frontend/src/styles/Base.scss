@@ -3,10 +3,12 @@ body {
     font-family: Roboto, Helvetica, sans-serif;
 }
 
-$color_header: #6200E8;
-$color_lime: #D4FFC9;
+$color_purple_header: #6200E8;
+$color_lime_card: #D4FFC9;
 $color_gray_info: #666666;
 $color_gray_text: #BABABA;
+$color_dark_input: #363636;
+$color_green_accept: #609C30;
 
 .buttons {
     text-decoration: none;
@@ -21,4 +23,26 @@ $color_gray_text: #BABABA;
     font-size: 60px;
     text-align: center;
     margin: 80px 0;
+}
+
+.Toastify__toast-container {
+    position:absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width:800px !important;
+    top: 100px !important;
+}
+
+.toast > div {
+    border-radius: 50px;
+    background-color: #f60505;
+    color: white;
+    font-size: 50px;
+    padding: 40px;
+    text-align: center;
+}
+
+.Toastify__close-button {
+    display: none;
 }

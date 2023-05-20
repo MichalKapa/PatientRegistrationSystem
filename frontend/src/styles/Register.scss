@@ -1,0 +1,73 @@
+@import './Base.scss';
+
+form {
+    margin: auto;
+    width: 1040px;
+}
+
+label {
+    font-size: 28px;
+    line-height: 46px;
+    text-align: right;
+    width: 280px;
+    display: inline-block;
+    margin-right: 30px;
+    font-weight: bold;
+}
+
+.checkbox {
+    text-align: center;
+    display: inline-block;
+    margin-left: 80px;
+    margin-top: 20px;
+    font-size: 25px;
+    input {
+        width: 13px;
+        margin: 0 0 0 25px;
+        transform: scale(2.5);
+        accent-color: $color_green_accept
+    }
+}
+
+.column3 {
+    width: 300px;
+    height: 10px;
+    display: inline-block;
+}
+
+p {
+    display: inline;
+    margin-right: 7px;
+}
+
+a {
+    font-weight: bold;
+    color: black;
+}
+
+.input_container {
+    margin-bottom: 20px;
+    height: 46px;
+}
+
+.input_buttons {
+    font-size: 24px;
+    padding: 9px;
+    width: 400px;
+    border-radius: 30px;
+    border: none;
+    background-color: $color_dark_input;
+    color: white;
+    text-align: center;
+}
+
+.input_buttons::placeholder {
+    color: $color_gray_text;
+}
+
+.accept_button {
+    background-color: $color_green_accept;
+    width: 418px;
+    margin-left: 10px;
+    cursor: pointer;
+}
