@@ -1,9 +1,15 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom"
 import '../styles/Booking.scss'
 
 function Booking() {
     const { id } = useParams()
     
+    const handleClick = (index: number, date: string, dayIndex: number) => {
+      // hourClicked(index, date);
+      displayConfirmation(index, date, dayIndex)
+    };
+
     interface Doctor {
       id: number,
       firstName: string,
@@ -80,6 +86,82 @@ function Booking() {
       },
     ];
 
+    interface TimeSlot {
+      time: string;
+      isPast: boolean;
+      dayIndex: number;
+    }
+
+    const hourArray = [
+      "8:00",
+      "8:30",
+      "9:00",
+      "9:30",
+      "10:00",
+      "10:30",
+      "11:00",
+      "11:30",
+      "12:00",
+      "12:30",
+      "13:00",
+      "13:30",
+      "14:00",
+      "14:30",
+      "15:00",
+      "15:30",
+      "16:00",
+      "16:30",
+      "17:00",
+      "17:30",
+    ]
+
+    type MyDictionary = Record<string, string>;
+
+    const daysDict: MyDictionary = {
+      "PN": "PONIEDZIAŁEK",
+      "WT": "WTOREK",
+      "ŚR": "ŚRODA",
+      "CZ": "CZWARTEK",
+      "PT": "PIĄTEK",
+    }
+
+    const generateTimeColumn = (date: string, dayIndex: number): JSX.Element => {    
+      const generateTimeSlots = (): TimeSlot[] => {
+        const startTime = new Date();
+        startTime.setHours(8, 0, 0); // Set the start time to 8:00 AM
+        const endTime = new Date();
+        endTime.setHours(17, 30, 0); // Set the end time to 5:30 PM
+    
+        const timeSlots: TimeSlot[] = [];
+        let currentTime = new Date(startTime);
+    
+        while (currentTime <= endTime) {
+          const formattedTime = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          const isPast = formattedTime < currentTime.toLocaleDateString([], { hour: '2-digit', minute: '2-digit' });
+    
+          timeSlots.push({ time: formattedTime, isPast, dayIndex });
+    
+          currentTime.setMinutes(currentTime.getMinutes() + 30); // Add 30 minutes
+        }
+    
+        return timeSlots;
+      };
+    
+      const timeSlots = generateTimeSlots();
+    
+      return (
+        <div className="hour_column">
+          <ul>
+            {timeSlots.map((slot, index) => (
+              <li key={index} className={slot.isPast ? 'past' : ''}>
+                <h6 className="prevent_select" id={date + index} onClick={() => handleClick(index, date, slot.dayIndex)}>{slot.time}</h6>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    };
+
     const doctorId = parseInt(id ?? "");
     const doctor = doctorList[doctorId];
 
@@ -125,10 +207,38 @@ function Booking() {
     return workingDays.toLocaleString();
   }
     
-  
   const workingDates = getNextWorkingDates();
-  console.log(workingDates);
+
+  // let prevHourClicked = ""
+
+  // function hourClicked(index: number, date: string) {
+  //   if (prevHourClicked != "") {
+  //     document.getElementById(prevHourClicked)?.classList.remove("selected")
+  //   }
+  //   prevHourClicked = date + index
+  //   document.getElementById(prevHourClicked)!.classList.add("selected")
+  // }
   
+  function displayConfirmation(index: number, date: string, dayIndex: number) {
+    document.getElementById("confirmation")!.style.display = "block"
+    document.getElementById("calendar")!.style.display = "none"
+    
+    document.getElementById("datetime")!.innerHTML = daysDict[date.split(".")[0]] + " " + hourArray[index] + " - " + getNextWorkingDates().split(", ")[0]
+  }
+
+  function hideConfirmation() {
+    document.getElementById("confirmation")!.style.display = "none"
+    document.getElementById("calendar")!.style.display = "flex"
+  }
+
+  function acceptClick() {
+    //add reservation
+    window.location.href = "/"
+  }
+  
+  function cancelClick() {
+    hideConfirmation()
+  }
 
   return (
     <div id="booking_page">
@@ -146,11 +256,22 @@ function Booking() {
           <a href="tel:+48111222333">+48 111 222 333</a>
         </div>
       </div>
-      <div className="calendar">
+      <div id="confirmation" className="confirmation">
+        <h1 className="choice_text">Wybrany dzień i godzina:</h1>
+        <div className="datetime_div">
+          <h2 id="datetime">Piątek 12:00 - 05.05.2023</h2>
+        </div>
+        <div className="buttons_div">
+          <button onClick={() => cancelClick()} className="buttons accept_button cancel_button">Anuluj</button>
+          <button onClick={() => acceptClick()} className="buttons accept_button">Zatwierdź</button>
+        </div>
+      </div>
+      <div id="calendar" className="calendar">
         {getWorkingWeekDays().map((day, index) => (
           <div key={index} className="weekday_column">
             <h4>{day}</h4>
             <h5>{workingDates.split(',')[index*2]}</h5>
+              {generateTimeColumn(day, index)}
           </div>
         ))}
         
