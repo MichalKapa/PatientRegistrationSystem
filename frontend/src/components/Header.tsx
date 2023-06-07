@@ -2,8 +2,8 @@ import "../styles/Header.scss";
 import HeaderButton from "./HeaderButton";
 
 const Header = () => {
-    const user: string = 'g'
-    switch(user) {
+    const role: string = 'g'
+    switch(role) {
         case 'p': {
             return (
             <nav id='header'>
@@ -30,7 +30,7 @@ const Header = () => {
                         <HeaderButton text={"REJESTRACJA"} primaryColor={"#609C30"} secondaryColor={"white"} link={"/register"} />
                     </li>
                     <li>
-                        <HeaderButton text={"LOGOWANIE"} primaryColor={"#609C30"} secondaryColor={"white"} link={"/login"} />
+                        <HeaderButton text={"LOGOWANIE"} primaryColor={"#609C30"} secondaryColor={"white"} link={"/login/patient"} />
                     </li>
                 </ul>
             </nav>

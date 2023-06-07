@@ -153,8 +153,8 @@ function Booking() {
         <div className="hour_column">
           <ul>
             {timeSlots.map((slot, index) => (
-              <li key={index} className={slot.isPast ? 'past' : ''}>
-                <h6 className="prevent_select" id={date + index} onClick={() => handleClick(index, date, slot.dayIndex)}>{slot.time}</h6>
+              <li key={index}>
+                <h6 className={`prevent_select ${slot.isPast ? 'past' : ''}`} id={date + index} onClick={() => handleClick(index, date, slot.dayIndex)}>{slot.time}</h6>
               </li>
             ))}
           </ul>
@@ -222,8 +222,8 @@ function Booking() {
   function displayConfirmation(index: number, date: string, dayIndex: number) {
     document.getElementById("confirmation")!.style.display = "block"
     document.getElementById("calendar")!.style.display = "none"
-    
-    document.getElementById("datetime")!.innerHTML = daysDict[date.split(".")[0]] + " " + hourArray[index] + " - " + getNextWorkingDates().split(", ")[0]
+    console.log(dayIndex)
+    document.getElementById("datetime")!.innerHTML = daysDict[date.split(".")[0]] + " " + hourArray[index] + " - " + getNextWorkingDates().split(",")[dayIndex * 2]
   }
 
   function hideConfirmation() {
