@@ -1,1 +1,77 @@
-@import './Base.scss'
+@import './Base.scss';
+
+#new_data_page {
+    .form_container {
+        width: 900px;
+        margin: auto;
+
+        .measurement:first-child {
+            margin-bottom: 54px;
+        }
+
+        .measurement {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+
+            h2 {
+                font-size: 30px;
+                margin: 0;
+                margin-right: 80px;
+                margin-left: 15px;
+                line-height: 50px;
+                width: 200px;
+    
+            }
+    
+            input {
+                border-radius: 30px;
+                background-color: #dddddd;
+                height: 50px;
+                text-align: center;
+                font-size: 26px;
+                font-weight: bold;
+                width: 150px;
+                border: none;
+            }
+
+            .tag {
+                width: 100px;
+                margin-right: 0;
+            }
+
+            .pressure_input {
+                margin-top: 24px;
+            }
+
+            .pressure_tag {
+                margin-top: 24px;
+            }
+        }
+
+        .buttons_div {
+            height: 50px;
+            margin: auto;
+            margin-top: 100px;
+            width: 800px;
+            display: flex;
+            justify-content: space-between;
+    
+            .buttons {
+                height: 50px;
+                width: 330px;
+                color: white;
+                font-size: 24px;
+                line-height: 24px;
+                font-weight: bold;
+            }
+    
+            .cancel_button {
+                background-color: $color_green_cancel;
+            }
+        }
+
+
+        
+    }
+}

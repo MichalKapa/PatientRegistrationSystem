@@ -116,7 +116,7 @@ function MyData() {
         </ChartComponent>),
 
         (<ChartComponent
-            title="Ciśnienie"
+            title="Ciśnienie w mmHg"
             primaryXAxis={{ valueType: "Category" }}
             legendSettings={{ visible: true }}
         >
