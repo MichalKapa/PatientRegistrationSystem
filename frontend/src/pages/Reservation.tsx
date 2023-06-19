@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom"
-import '../styles/Booking.scss'
+import '../styles/Reservation.scss'
 
-function Booking() {
+function Reservation() {
     const { id } = useParams()
     
     const handleClick = (index: number, date: string, dayIndex: number) => {
@@ -128,20 +128,25 @@ function Booking() {
     const generateTimeColumn = (date: string, dayIndex: number): JSX.Element => {    
       const generateTimeSlots = (): TimeSlot[] => {
         const startTime = new Date();
-        startTime.setHours(8, 0, 0); // Set the start time to 8:00 AM
+        startTime.setHours(8, 0, 0);
         const endTime = new Date();
-        endTime.setHours(17, 30, 0); // Set the end time to 5:30 PM
-    
+        endTime.setHours(17, 30, 0);
+        const actualTime = new Date()
+
         const timeSlots: TimeSlot[] = [];
         let currentTime = new Date(startTime);
     
         while (currentTime <= endTime) {
           const formattedTime = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-          const isPast = formattedTime < currentTime.toLocaleDateString([], { hour: '2-digit', minute: '2-digit' });
-    
+
+          let isPast = false
+          if (dayIndex == 0) {
+            isPast = formattedTime < actualTime.toLocaleDateString([], { hour: '2-digit', minute: '2-digit' });
+          }
+
           timeSlots.push({ time: formattedTime, isPast, dayIndex });
     
-          currentTime.setMinutes(currentTime.getMinutes() + 30); // Add 30 minutes
+          currentTime.setMinutes(currentTime.getMinutes() + 30);
         }
     
         return timeSlots;
@@ -153,8 +158,8 @@ function Booking() {
         <div className="hour_column">
           <ul>
             {timeSlots.map((slot, index) => (
-              <li key={index} className={slot.isPast ? 'past' : ''}>
-                <h6 className="prevent_select" id={date + index} onClick={() => handleClick(index, date, slot.dayIndex)}>{slot.time}</h6>
+              <li key={index}>
+                <h6 className={`prevent_select ${slot.isPast ? 'past' : ''}`} id={date + index} onClick={() => handleClick(index, date, slot.dayIndex)}>{slot.time}</h6>
               </li>
             ))}
           </ul>
@@ -222,8 +227,8 @@ function Booking() {
   function displayConfirmation(index: number, date: string, dayIndex: number) {
     document.getElementById("confirmation")!.style.display = "block"
     document.getElementById("calendar")!.style.display = "none"
-    
-    document.getElementById("datetime")!.innerHTML = daysDict[date.split(".")[0]] + " " + hourArray[index] + " - " + getNextWorkingDates().split(", ")[0]
+    console.log(dayIndex)
+    document.getElementById("datetime")!.innerHTML = daysDict[date.split(".")[0]] + " " + hourArray[index] + " - " + getNextWorkingDates().split(",")[dayIndex * 2]
   }
 
   function hideConfirmation() {
@@ -241,7 +246,7 @@ function Booking() {
   }
 
   return (
-    <div id="booking_page">
+    <div id="reservation_page">
       <div className="doctor_card">
         <img src={doctor.imageSource} alt={`${doctor.firstName} ${doctor.lastName}`} />
         <h1>dr {doctor.firstName}</h1>
@@ -280,4 +285,4 @@ function Booking() {
   )
 }
 
-export default Booking
+export default Reservation

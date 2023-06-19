@@ -1,0 +1,95 @@
+@import './Base.scss';
+@import url(https://cdn.syncfusion.com/ej2/PACKAGENAME/styles/THEMENAME.css);
+
+#my_data_page {
+    
+    .center_column {
+        width: 80%;
+        margin: auto;
+        display: flex;
+        justify-content: right;
+        margin-bottom: 30px;
+    }
+
+    a {
+        background-color: #4BDD34;
+        margin: 40px 0;
+        border: none;
+        font-weight: bold;
+        letter-spacing: 1px;
+        cursor: pointer;
+    }
+
+    // .e-control .e-chart .e-lib .e-chart-focused .e-touch {
+    //     width: 100%;
+    //     display: block;
+    // }
+
+    text {
+        font-size: 16px !important;
+    }
+    
+    #chart_57723_1 {
+        width: 90%;
+        display: block;
+        margin: auto;
+        height: 600px;
+        
+    }
+
+    #chart_57723_1_ChartTitle {
+        font-size: 35px !important;
+        font-weight: bold !important;
+        margin-top: 40px;
+    }
+
+    #chart_57723_1_AxisTitle_1, #chart_57723_1_AxisTitle_0 {
+        font-size: 20px !important;
+    }
+
+
+    #chart_57723_2 {
+        width: 90%;
+        display: block;
+        margin: auto;
+        height: 600px;
+        
+    }
+
+    #chart_57723_2_ChartTitle {
+        font-size: 35px !important;
+        font-weight: bold !important;
+        margin-top: 40px;
+    }
+
+    #chart_57723_2_AxisTitle_1, #chart_57723_2_AxisTitle_0 {
+        font-size: 20px !important;
+    }
+
+
+    #chart_57723_3 {
+        width: 90%;
+        display: block;
+        margin: auto;
+        height: 600px;
+        
+    }
+
+    #chart_57723_3_ChartTitle {
+        font-size: 35px !important;
+        font-weight: bold !important;
+        margin-top: 40px;
+    }
+
+    #chart_57723_3_AxisTitle_1, #chart_57723_3_AxisTitle_0 {
+        font-size: 20px !important;
+    }
+
+    #chart_57723_2_AxisTitle_1 {
+        margin-right: 20px;
+    }
+
+    #chart_57723_2_AxisTitle_1 {
+        padding: 100px;
+    }
+}

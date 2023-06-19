@@ -83,7 +83,7 @@ function Home() {
             <div className='column2'>
               <div className='button_box'>
                 <span>{doctor.description}</span>
-                <a href={`/booking/${doctor.id}`} className='buttons'>ZAREZERWUJ WIZYTĘ</a>
+                <a href={`/reservation/${doctor.id}`} className='buttons'>ZAREZERWUJ WIZYTĘ</a>
               </div>
             </div>
           </div>

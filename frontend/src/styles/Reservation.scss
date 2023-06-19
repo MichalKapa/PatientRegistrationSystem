@@ -1,6 +1,6 @@
 @import './Base.scss';
 
-#booking_page {
+#reservation_page {
     display: flex;
     span {
         width: 100px;
@@ -208,18 +208,15 @@
     }
 }
 
+.past {
+    background-color: $color_calendar_past !important;
+    pointer-events: none;
+    
+}
 
-
-
-
-
-
-
-
-
-
-
-
+.reserved {
+    background-color: $color_calendar_reserved;
+}
 
 .prevent_select {
     -webkit-user-select: none; /* Safari */
