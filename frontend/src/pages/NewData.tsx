@@ -60,6 +60,14 @@ function NewData() {
     return sanitizedValue;
   };
 
+  function cancelClick() {
+
+  }
+
+  function acceptClick() {
+    
+  }
+
   return (
     <div id='new_data_page'>
       <h1 className='main_text'>NOWE POMIARY</h1>
@@ -109,8 +117,8 @@ function NewData() {
         </div>
       </div>
       <div className="buttons_div">
-        {/* <button onClick={() => cancelClick()} className="buttons accept_button cancel_button">Anuluj</button>
-        <button onClick={() => acceptClick()} className="buttons accept_button">Zatwierdź</button> */}
+        <button onClick={() => cancelClick()} className="buttons accept_button cancel_button">Anuluj</button>
+        <button onClick={() => acceptClick()} className="buttons accept_button">Zatwierdź</button>
       </div>
     </div>
   )
