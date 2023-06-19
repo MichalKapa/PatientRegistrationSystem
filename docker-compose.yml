@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:15
+    container_name: database_postgresql
+    volumes:
+      - app-data:/var/lib/postresql-data
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=registration_system
+
+  backend:
+    build: ./backend
+    container_name: fastapi
+    command: uvicorn app.main:app --host 0.0.0.0 --port 5050
+    ports:
+      - 5050:5050
+    environment:
+      - DB_URL=localhost:5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=registration_system
+  # frontend:
+
+
+volumes:
+  app-data:
