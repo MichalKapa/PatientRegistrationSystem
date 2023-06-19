@@ -3,10 +3,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 import os
-user = os.environ["POSTGRES_USER"]
-password = os.environ["POSTGRES_PASSWORD"]
-address = os.environ["POSTGRES_ADDRESS"]
-db = os.environ["POSTGRES_DB"]
+user = os.environ["DB_USER"]
+password = os.environ["DB_PASSWORD"]
+address = os.environ["DB_URL"]
+db = os.environ["DB_NAME"]
 
 # SQLALCHEMY_DATABASE_URL = f"postgresql://{user}:{password}@{address}/{db}"
 
