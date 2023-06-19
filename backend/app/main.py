@@ -34,8 +34,8 @@ def get_db():
         db.close()
 
 import os
-database_address = os.environ["POSTGRES_ADDRESS"]
-frontend_address = os.environ["FRONTEND_ADDRESS"]
+database_address = os.environ["DB_URL"]
+frontend_address = os.environ["FRONTEND_URL"]
 
 origins = [
     "http://localhost:8080",
