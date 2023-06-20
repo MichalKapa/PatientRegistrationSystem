@@ -303,7 +303,7 @@ async def login_admin(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
 
 @app.get("/login/patient")
 async def google_login(request: Request):
-    return await google_sso.get_login_url(redirect_uri=request.url_for("sso_callback"))
+    return await google_sso.get_login_redirect(redirect_uri=request.url_for("sso_callback"))
 
 
 @app.get("/ssotoken/callback")
@@ -326,7 +326,7 @@ async def sso_callback(request: Request, db: Session = Depends(get_db)):
 
     redirect_response = RedirectResponse("http://localhost:3000/")
     redirect_response.set_cookie(
-        key="access_token", value=f"Bearer {access_token}", httponly=True
+        key="access_token", value=f"Bearer {access_token}"
     )
     return redirect_response
 

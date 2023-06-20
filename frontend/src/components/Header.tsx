@@ -2,9 +2,15 @@ import "../styles/Header.scss";
 import HeaderButton from "./HeaderButton";
 
 const Header = () => {
-    const role: string = 'a'
-    switch(role) {
-        case 'p': {
+    function handleLogout(){
+        localStorage.removeItem("token");
+        localStorage.removeItem("user_role");
+        document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+        console.log("wylogowano");
+    }
+
+    switch(localStorage.getItem("user_role")?.toLowerCase()) {
+        case 'patient': {
             return (
             <nav id='header'>
                 <ul>
@@ -21,12 +27,12 @@ const Header = () => {
                         <HeaderButton text={"MOJE WIZYTY"} primaryColor={"black"} secondaryColor={"white"} link={"/my/reservations"} />
                     </li>
                     <li>
-                        <a href={"/"} className='buttons logout_button'>WYLOGUJ</a>
+                        <a href={"/"} className='buttons logout_button' onClick={handleLogout}>WYLOGUJ</a>
                     </li>
                 </ul>
             </nav>
             )}
-        case 'd': {
+        case 'doctor': {
             return (
             <nav id='header'>
                <ul>
@@ -40,12 +46,12 @@ const Header = () => {
                         <HeaderButton text={"KALENDARZ"} primaryColor={"black"} secondaryColor={"white"} link={"/doctor/calendar"} />
                     </li>
                     <li>
-                        <a href={"/"} className='buttons logout_button'>WYLOGUJ</a>
+                        <a href={"/"} className='buttons logout_button' onClick={handleLogout}>WYLOGUJ</a>
                     </li>
                </ul>
             </nav>
             )}
-        case 'a': {
+        case 'admin': {
             return (
             <nav id='header'>
                 <ul>
@@ -53,7 +59,7 @@ const Header = () => {
                         <HeaderButton text={"LISTA LEKARZY"} primaryColor={"black"} secondaryColor={"white"} link={"/show/doctors"} />
                     </li>
                     <li>
-                        <a href={"/"} className='buttons logout_button'>WYLOGUJ</a>
+                        <a href={"/"} className='buttons logout_button' onClick={handleLogout}>WYLOGUJ</a>
                     </li>
                 </ul>
             </nav>
