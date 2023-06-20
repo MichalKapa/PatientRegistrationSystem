@@ -9,7 +9,7 @@ def create_patient(db: Session, email: str):
     db_patient = db.query(model.Patient).filter(model.Patient.email == email).first()
     if db_patient is not None:
         return HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Patient already exists.")
-    patient = model.Patient({"email": email})
+    patient = model.Patient(email=email)
     db.add(patient)
     db.commit()
     db.refresh(patient)
