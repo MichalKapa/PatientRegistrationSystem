@@ -74,9 +74,9 @@ const Header = () => {
                     <li>
                         <HeaderButton text={"KONTAKT"} primaryColor={"black"} secondaryColor={"white"} link={"/contact"} />
                     </li>
-                    <li>
+                    {/* <li>
                         <HeaderButton text={"REJESTRACJA"} primaryColor={"#609C30"} secondaryColor={"white"} link={"/register"} />
-                    </li>
+                    </li> */}
                     <li>
                         <HeaderButton text={"LOGOWANIE"} primaryColor={"#609C30"} secondaryColor={"white"} link={"/login/patient"} />
                     </li>

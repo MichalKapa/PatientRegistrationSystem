@@ -1,4 +1,6 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect } from 'react'
+import { useLocation } from 'react-router-dom';
 import "../styles/Home.scss"
 
 function Home() {
@@ -35,6 +37,15 @@ function Home() {
     imageSource: string,
     description: string,
   }
+
+  // function getDoctors() {
+  //   axios.get("http://localhost:5050/get/doctors")
+  //     .then((response) => console.log(response.data))
+  // }
+
+  // useEffect(() => {
+  //   getDoctors();
+  // }, []);
 
   const doctorList: Doctor[] = [
     {

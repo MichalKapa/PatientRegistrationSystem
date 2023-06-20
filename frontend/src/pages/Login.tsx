@@ -4,13 +4,15 @@ import { ToastContainer, toast } from 'react-toastify'
 import '../styles/Register.scss';
 import '../styles/Login.scss';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 
 function Login() {
 
   const { role } = useParams()
 
   interface User {
-    login: string,
+    username: string,
     password: string,
   }
 
@@ -28,26 +30,71 @@ const onChange = (e: ChangeEvent<HTMLInputElement>) => {
   }))
 }
 
+
 const onSubmit = (e: { preventDefault: () => void; }) => {
   e.preventDefault()
+  }
 
-    const user: User = {
-        login: login,
-        password: password
-    }
+  function loginWithGoogle() {
+    axios.get("http://localhost:5050/login/patient")
+      .then((response) => {
+        document.location.replace(response.data);
+      })
+  }
 
-    switch (role) {
-      case "patient":
-        alert("zaloguj_patient(login, password)")
-        break;
-      case "doctor":
-        alert("zaloguj_doctor(login, password)")
-        break;
-      case "admin":
-        alert("zaloguj_admin(login, password)")
-        break;
+  const handleGoogleResponse = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+    if ('accessToken' in response) {
+      const { accessToken } = response;
+      console.log(response)
+
+      console.log('Access Token:', accessToken);
     }
-}
+  };
+
+  const handleGoogleFailure = (error: any) => {
+    console.error('Google SSO Sign Up failed:', error);
+  };
+
+  function loginDoctor(username: string, password: string) {
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+  
+    axios.post("http://localhost:5050/login/doctor", formData)
+    .then((response) => {
+      if (response.status === 401) {
+        console.log("Unauthorized");
+      } else {
+        localStorage.setItem('token', response.data.access_token);
+        localStorage.setItem('user_role', "doctor");
+        window.location.href = "http://localhost:3000";
+      }
+    })
+    .catch((error) => toast.error("Niepoprawne dane logowania!"));
+  }
+  function loginAdmin(username: string, password: string) {
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+  
+    axios.post("http://localhost:5050/login/admin", formData)
+    .then((response) => {
+      if (response.status === 401) {
+        console.log("Unauthorized");
+      } else {
+        localStorage.setItem('token', response.data.access_token);
+        localStorage.setItem('user_role', "admin");
+        window.location.href = "http://localhost:3000";
+      }
+    })
+    .catch((error) => toast.error("Niepoprawne dane logowania!"));
+  }
+
+
+  const loginButton = role == 'admin' ?
+  (<input id="form_submit" onClick={() => loginAdmin(login, password)} className={`input_buttons accept_button login_button_admin`} type="submit" placeholder="Submit" value="Zaloguj"/>)
+  : (<input id="form_submit" onClick={() => loginDoctor(login, password)} className={`input_buttons accept_button login_button_doctor`} type="submit" placeholder="Submit" value="Zaloguj"/>)
+  
   
   if (["admin", "patient", "doctor"].includes(role as string)) {
     return (
@@ -69,8 +116,18 @@ const onSubmit = (e: { preventDefault: () => void; }) => {
           </div>
           <div className='input_container login_accept'>
             <div className='column3'></div>
-            <input id="form_submit" className={`input_buttons accept_button ${role === 'doctor' ? 'login_button_doctor' : ''} ${role === 'admin' ? 'login_button_admin' : ''}`} type="submit" placeholder="Submit" value="Zaloguj"/>
+            {loginButton}
           </div>
+            <div onClick={()=> loginWithGoogle()} className={`google_login ${role === 'patient' ? '' : 'hidden'}`}>
+            <h1>ZALOGUJ Z KONTEM GOOGLE</h1>
+          </div>
+          <GoogleLogin
+            clientId="51147604812-bimdr2gb13fqak47u80gmnkpdousuu7b.apps.googleusercontent.com"
+            buttonText="Sign up with Google"
+            onSuccess={handleGoogleResponse}
+            onFailure={handleGoogleFailure}
+            cookiePolicy="single_host_origin"
+          />
         </form>
       </div>
     )

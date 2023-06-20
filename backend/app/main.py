@@ -17,7 +17,7 @@ from jose import jwt, JWTError
 from app.config import Config
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.context import CryptContext
-
+from app.auth.auth import verify_password, get_password_hash
 import os
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 database_address = os.environ["DB_URL"]
@@ -57,17 +57,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*", "Access-Control-Allow-Origin"],
 )
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
-
-
-def get_password_hash(password):
-    return pwd_context.hash(password)
-
 
 def authenticate_doctor(db, username: str, password: str):
     doctor = utils.get_doctor_login(db, username)
@@ -303,7 +292,7 @@ async def login_admin(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
 
 @app.get("/login/patient")
 async def google_login(request: Request):
-    return await google_sso.get_login_redirect(redirect_uri=request.url_for("sso_callback"))
+    return await google_sso.get_login_url(redirect_uri=request.url_for("sso_callback"))
 
 
 @app.get("/ssotoken/callback")
