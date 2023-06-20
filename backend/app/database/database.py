@@ -8,9 +8,7 @@ password = os.environ["DB_PASSWORD"]
 address = os.environ["DB_URL"]
 db = os.environ["DB_NAME"]
 
-# SQLALCHEMY_DATABASE_URL = f"postgresql://{user}:{password}@{address}/{db}"
-
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/registration_system"
+SQLALCHEMY_DATABASE_URL = f"postgresql://{user}:{password}@{address}/{db}"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

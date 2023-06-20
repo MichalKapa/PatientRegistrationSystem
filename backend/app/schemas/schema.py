@@ -76,7 +76,7 @@ class DoctorUpdate(BaseModel):
     first_name: str
     last_name: str
     email: str
-    image_source: str # zmienić na plik
+    image_source: str
     description: str
 
 
