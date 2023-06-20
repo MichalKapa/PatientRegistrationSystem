@@ -29,7 +29,8 @@ model.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="photos"), name="static")
+app.mount("/static", StaticFiles(directory=os.path.join(os.path.dirname(__file__), "photos")), name="static")
+
 
 def get_db():
     db = SessionLocal()
