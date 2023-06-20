@@ -2,7 +2,7 @@ import "../styles/Header.scss";
 import HeaderButton from "./HeaderButton";
 
 const Header = () => {
-    const role: string = 'a'
+    const role: string = 'g'
     switch(role) {
         case 'p': {
             return (

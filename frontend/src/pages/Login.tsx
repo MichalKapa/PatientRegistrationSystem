@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import '../styles/Register.scss';
 import '../styles/Login.scss';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 function Login() {
 
@@ -47,7 +48,14 @@ const onSubmit = (e: { preventDefault: () => void; }) => {
         alert("zaloguj_admin(login, password)")
         break;
     }
-}
+  }
+
+  function loginWithGoogle() {
+    axios.get("http://localhost:5050/login/patient")
+      .then((response) => window.location.href = response.data)
+  }
+
+
   
   if (["admin", "patient", "doctor"].includes(role as string)) {
     return (
@@ -71,6 +79,7 @@ const onSubmit = (e: { preventDefault: () => void; }) => {
             <div className='column3'></div>
             <input id="form_submit" className={`input_buttons accept_button ${role === 'doctor' ? 'login_button_doctor' : ''} ${role === 'admin' ? 'login_button_admin' : ''}`} type="submit" placeholder="Submit" value="Zaloguj"/>
           </div>
+          <div onClick={()=> loginWithGoogle()} className='google_login'>LOGIN WITH GOOGLE</div>
         </form>
       </div>
     )
