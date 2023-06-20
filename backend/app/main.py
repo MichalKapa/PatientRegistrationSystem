@@ -176,8 +176,9 @@ async def get_patient_reservations(patient_email: str,
 
 
 @app.post("/add")
-async def make_appointment(patient_email: str, doctor_id: int, time: datetime, db: Session = Depends(get_db)):
-    return utils.create_and_reserve_appointment(db, patient_email, doctor_id, time)
+async def make_appointment(patient: Annotated[model.Patient, Depends(get_current_patient)],
+                           doctor_id: int, time: datetime, db: Session = Depends(get_db)):
+    return utils.create_and_reserve_appointment(db, patient.email, doctor_id, time)
 
 
 @app.post("/add/reservation")
