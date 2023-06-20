@@ -165,6 +165,12 @@ async def root():
     return {"message": "The Patient Registration System is working."}
 
 
+# @app.post("/doctor/upload_photo") # todo
+# async def doctor_upload_photo(doctor: Annotated[model.Doctor, Depends(get_current_doctor)],
+#                               db: Session = Depends(get_db)):
+#     return
+
+
 @app.get("/get/reservations/doctor/{doctor_id}")
 async def get_doctor_reservations(doctor_id: int, db: Session = Depends(get_db)):
     return utils.doctor_reservations(db, doctor_id)
@@ -243,10 +249,16 @@ async def delete_doctor(doctor_id: int, admin: Annotated[model.Admin, Depends(ge
 
 
 @app.get("/patient/measurements/{patient_id}")
-async def get_patient_measurements(patient_email: str, db: Session = Depends(get_db)): # todo
+async def get_patient_measurements(patient_email: str, doctor: Annotated[model.Doctor, Depends(get_current_doctor)],
+                                                              db: Session = Depends(get_db)):
     #sprawdzanie czy lekarz który ma wizytę z pacjentem prosi o pomiary
-    #sprawdzić czy pacjent prosi o swoje pomiary
     return utils.get_patient_measurements(db, patient_email)
+
+
+@app.get("/patient/measurements/me")
+async def get_patient_measurements(patient: Annotated[model.Patient, Depends(get_current_patient)],
+                                   db: Session = Depends(get_db)):
+    return utils.get_patient_measurements(db, patient.email)
 
 
 @app.post("/add/measurement")
@@ -291,7 +303,7 @@ async def login_admin(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
 
 @app.get("/login/patient")
 async def google_login(request: Request):
-    return await google_sso.get_login_redirect(redirect_uri=request.url_for("sso_callback"))
+    return await google_sso.get_login_url(redirect_uri=request.url_for("sso_callback"))
 
 
 @app.get("/ssotoken/callback")
@@ -310,13 +322,13 @@ async def sso_callback(request: Request, db: Session = Depends(get_db)):
         data={"sub": user.email}, expires_delta=access_token_expire
     )
 
-    return access_token
-    #
-    # redirect_response = RedirectResponse("http://localhost:3000/admin")
-    # redirect_response.set_cookie(
-    #     key="access_token", value=f"Bearer {access_token}", httponly=True
-    # )
-    # return redirect_response
+    # return access_token
+
+    redirect_response = RedirectResponse("http://localhost:3000/")
+    redirect_response.set_cookie(
+        key="access_token", value=f"Bearer {access_token}", httponly=True
+    )
+    return redirect_response
 
 
 @app.post("/add/admin")
