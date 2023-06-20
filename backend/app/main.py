@@ -16,7 +16,7 @@ from sqlalchemy.orm import Session
 from jose import jwt, JWTError
 from app.config import Config
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from passlib.context import CryptContext
+from fastapi.staticfiles import StaticFiles
 from app.auth.auth import verify_password, get_password_hash
 import os
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
@@ -27,6 +27,7 @@ model.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+app.mount("/static", StaticFiles(directory="photos"), name="static")
 
 def get_db():
     db = SessionLocal()
@@ -172,6 +173,11 @@ async def get_patient_reservations(patient_email: str,
     if patient.email != patient_email:
         return HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
     return utils.patient_reservations(db, patient_email)
+
+
+@app.post("/add")
+async def make_appointment(patient_email: str, doctor_id: int, time: datetime, db: Session = Depends(get_db)):
+    return utils.create_and_reserve_appointment(db, patient_email, doctor_id, time)
 
 
 @app.post("/add/reservation")
