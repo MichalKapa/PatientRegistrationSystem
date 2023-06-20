@@ -165,10 +165,6 @@ async def root():
     return {"message": "The Patient Registration System is working."}
 
 
-@app.post("/doctor/upload_photo")
-async def doctor_upload_photo():
-    return
-
 @app.get("/get/reservations/doctor/{doctor_id}")
 async def get_doctor_reservations(doctor_id: int, db: Session = Depends(get_db)):
     return utils.doctor_reservations(db, doctor_id)
