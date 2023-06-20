@@ -1,0 +1,10 @@
+@import "./Reservation.scss";
+
+#doctor_reservation_page {
+    display: block;
+    .main_text {
+        font-size: 60px;
+        text-align: center;
+        margin: 60px 0;
+    }
+}

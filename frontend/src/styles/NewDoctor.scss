@@ -1,0 +1,78 @@
+@import "./Base.scss";
+
+#new_doctor_page {
+
+    .main_text {
+        margin: 40px;
+    }
+
+    .input_container {
+        margin-bottom: 25px;
+    }
+
+    #sign_up_form {
+        width: 100%;
+        margin: 0;
+    }
+
+    .columns {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .column1 {
+        width: 49%;
+    }
+    .column2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 30%;
+    }
+
+    #form_submit {
+        margin: auto;
+        display: block;
+    }
+
+    input {
+        font-size: 20px;
+        width: 320px;
+    }
+
+    label {
+        font-size: 22px;
+    }
+
+    img {
+        border-radius: 110px;
+        width: 220px;
+        height: 220px;
+        margin-left: 20px;
+    }
+
+    .description_wrapper {
+        margin-left: 50px;
+    }
+
+
+    .img_container, .description_container{
+        display: flex;
+        align-items: center;
+    }
+
+    .description_input {
+        height: 100px;
+        break-after: always;
+        background-color: $color_lime_card;
+        border: none;
+        border-radius: 30px;
+        padding: 20px;
+        font-family: Roboto, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 16px;
+        width: 400px;
+        resize: none;
+    }
+}

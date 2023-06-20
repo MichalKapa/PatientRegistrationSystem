@@ -65,7 +65,7 @@ function NewData() {
   }
 
   function acceptClick() {
-    
+
   }
 
   return (
@@ -73,7 +73,7 @@ function NewData() {
       <h1 className='main_text'>NOWE POMIARY</h1>
       <div className='form_container'>
         <div className='measurement'>  
-          <h2>WAGA:</h2>
+          <h2>Waga:</h2>
           <input
             type="text"
             value={weight}
@@ -89,7 +89,7 @@ function NewData() {
             type="text"
             value={temperature}
             onChange={temperatureChange}
-            placeholder=""
+            placeholder="xx.x"
           />
           <h2 className='tag'>℃</h2>
          </div> 
@@ -100,7 +100,7 @@ function NewData() {
             type="text"
             value={systolicPressure}
             onChange={systolicPressureChange}
-            placeholder=""
+            placeholder="xxx"
           />
           <h2 className='tag pressure_tag'>mmHg</h2>
          </div> 
@@ -111,7 +111,7 @@ function NewData() {
             type="text"
             value={diastolicPressure}
             onChange={diastolicPressureChange}
-            placeholder=""
+            placeholder="xxx"
           />
           <h2 className='tag pressure_tag'>mmHg</h2>
         </div>

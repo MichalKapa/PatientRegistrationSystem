@@ -7,6 +7,10 @@ import Reservation from './pages/Reservation';
 import Terms from './pages/Terms';
 import MyData from './pages/MyData';
 import NewData from './pages/NewData';
+import MyReservations from './pages/MyReservations';
+import DoctorReservation from './pages/DoctorReservation';
+import AdminDoctorList from './pages/AdminDoctorList';
+import NewDoctor from './pages/NewDoctor';
 import {Routes, Route} from "react-router-dom";
 import "./styles/Base.scss"
 
@@ -23,6 +27,11 @@ function App() {
         <Route path="/terms" element={<Terms/>} />
         <Route path="/my/data" element={<MyData/>} />
         <Route path="/my/data/new" element={<NewData/>} />
+        <Route path="/my/reservations" element={<MyReservations/>} />
+        <Route path="/doctor/calendar" element={<DoctorReservation/>} />
+        <Route path="/show/doctors" element={<AdminDoctorList/>} />
+        <Route path="/doctor/add" element={<NewDoctor/>} />
+        <Route path="/doctor/edit/:id" element={<NewDoctor/>} />
       </Routes>
     </div>
   );

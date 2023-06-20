@@ -137,11 +137,11 @@ function Reservation() {
         let currentTime = new Date(startTime);
     
         while (currentTime <= endTime) {
-          const formattedTime = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          const formattedTime = currentTime.toLocaleTimeString("pl-PL", { hour: '2-digit', minute: '2-digit' });
 
           let isPast = false
           if (dayIndex == 0) {
-            isPast = formattedTime < actualTime.toLocaleDateString([], { hour: '2-digit', minute: '2-digit' });
+            isPast = formattedTime < actualTime.toLocaleDateString("pl-PL", { hour: '2-digit', minute: '2-digit' });
           }
 
           timeSlots.push({ time: formattedTime, isPast, dayIndex });
@@ -171,9 +171,6 @@ function Reservation() {
     const doctor = doctorList[doctorId];
 
     const currentDate = new Date();
-    const currentDateTimeString = currentDate.toLocaleString();
-    // console.log(currentDateTimeString.split(',')[0])
-    // console.log(currentDate.getDay());
 
     function getWorkingWeekDays() {
       let dayNumber = currentDate.getDay();
@@ -246,7 +243,7 @@ function Reservation() {
   }
 
   return (
-    <div id="reservation_page">
+    <div className="reservation_page">
       <div className="doctor_card">
         <img src={doctor.imageSource} alt={`${doctor.firstName} ${doctor.lastName}`} />
         <h1>dr {doctor.firstName}</h1>

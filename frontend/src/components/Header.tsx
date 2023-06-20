@@ -2,7 +2,7 @@ import "../styles/Header.scss";
 import HeaderButton from "./HeaderButton";
 
 const Header = () => {
-    const role: string = 'p'
+    const role: string = 'a'
     switch(role) {
         case 'p': {
             return (
@@ -49,9 +49,6 @@ const Header = () => {
             return (
             <nav id='header'>
                 <ul>
-                    <li>
-                        <HeaderButton text={"DODAJ LEKARZA"} primaryColor={"black"} secondaryColor={"white"} link={"/add/doctor"} />
-                    </li>
                     <li>
                         <HeaderButton text={"LISTA LEKARZY"} primaryColor={"black"} secondaryColor={"white"} link={"/show/doctors"} />
                     </li>
