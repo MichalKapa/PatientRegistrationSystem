@@ -204,13 +204,13 @@ function NewDoctor() {
                 <div className="column2">
                     <div className="img_container">
                         <h3 className="">ZDJĘCIE:</h3>
-                        {/* <input
+                        <input
                             type="file"
                             accept="image/*"
                             style={{ display: 'none' }}
                             ref={fileInputRef}
                             onChange={handleFileChange}
-                        /> */}
+                        />
                         <img
                             src={imageSrc || require("../images/img_icon.png")}
                             alt="Image Icon"
