@@ -160,3 +160,11 @@ def get_doctor_login(db: Session, email: str):
 
 def get_admin_login(db: Session, email: str):
     return db.query(model.Admin).filter(model.Admin.email == email).first()
+
+
+def set_doctor_profile_photo_url(db: Session, doctor_id: int, url: str):
+    doc = db.query(model.Doctor).filter(model.Doctor.doctor_id == doctor_id)
+    doc.image_source = url
+    db.commit()
+    db.refresh(doc)
+    return doc

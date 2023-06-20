@@ -1,24 +1,26 @@
+import os
 from datetime import timedelta, datetime
 from typing import Annotated
 
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, UploadFile
 from fastapi.responses import RedirectResponse
-from starlette import status
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.staticfiles import StaticFiles
+from fastapi import status
+from fastapi.requests import Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi_sso.sso.google import GoogleSSO
+from jose import jwt, JWTError
+from sqlalchemy.orm import Session
 
 from app.crud import utils
 from app.models import model
 from app.schemas import schema
 from app.database.database import engine, SessionLocal
-from starlette.requests import Request
-from fastapi_sso.sso.google import GoogleSSO
-from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.orm import Session
-from jose import jwt, JWTError
 from app.config import Config
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from fastapi.staticfiles import StaticFiles
 from app.auth.auth import verify_password, get_password_hash
-import os
+
+
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 database_address = os.environ["DB_URL"]
 frontend_address = os.environ["FRONTEND_URL"]
@@ -155,10 +157,14 @@ async def root():
     return {"message": "The Patient Registration System is working."}
 
 
-# @app.post("/doctor/upload_photo") # todo
-# async def doctor_upload_photo(doctor: Annotated[model.Doctor, Depends(get_current_doctor)],
-#                               db: Session = Depends(get_db)):
-#     return
+@app.post("/doctor/upload_photo", response_model=schema.Doctor)
+async def doctor_upload_photo(file: UploadFile, doctor: Annotated[model.Doctor, Depends(get_current_doctor)],
+                              db: Session = Depends(get_db)):
+    name = datetime.now().strftime('%Y%m%d_%H%M%S')
+    url = os.path.join("photos", name)
+    with open(os.path.join(url), "wb") as server_file:
+        server_file.write(file.read())
+    return utils.set_doctor_profile_photo_url(db, doctor.doctor_id, f"static/{url}")
 
 
 @app.get("/get/reservations/doctor/{doctor_id}")

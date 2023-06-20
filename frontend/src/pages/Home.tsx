@@ -21,14 +21,17 @@ function Home() {
   }
 
   const token = getToken();
-  if (token !== undefined && token !== ""){
-    console.log(token);
-    localStorage.setItem('token', token);
-    localStorage.setItem('user_role', "patient");
-  }else{
-    localStorage.removeItem('token');
-    localStorage.removeItem('user_role');
+  if(!(localStorage.getItem("user_role") == "admin" || localStorage.getItem("user_role") == "doctor" )){
+    if (token !== undefined && token !== "" && localStorage.getItem("user_role") == ""){
+      console.log(token);
+      localStorage.setItem('token', token);
+      localStorage.setItem('user_role', "patient");
+    }else{
+      localStorage.removeItem('token');
+      localStorage.removeItem('user_role');
+    }
   }
+  
 
   interface Doctor {
     id: number,
