@@ -2,9 +2,13 @@ import "../styles/Header.scss";
 import HeaderButton from "./HeaderButton";
 
 const Header = () => {
-    const role: string = 'g'
+    const role = localStorage.getItem('user_role');
+
+    function clearRole() {
+        localStorage.removeItem('user_role');
+    }
     switch(role) {
-        case 'p': {
+        case 'patient': {
             return (
             <nav id='header'>
                 <ul>
@@ -21,12 +25,12 @@ const Header = () => {
                         <HeaderButton text={"MOJE WIZYTY"} primaryColor={"black"} secondaryColor={"white"} link={"/my/reservations"} />
                     </li>
                     <li>
-                        <a href={"/"} className='buttons logout_button'>WYLOGUJ</a>
+                        <a href={"/"} onClick={() => clearRole()} className='buttons logout_button'>WYLOGUJ</a>
                     </li>
                 </ul>
             </nav>
             )}
-        case 'd': {
+        case 'doctor': {
             return (
             <nav id='header'>
                <ul>
@@ -40,12 +44,12 @@ const Header = () => {
                         <HeaderButton text={"KALENDARZ"} primaryColor={"black"} secondaryColor={"white"} link={"/doctor/calendar"} />
                     </li>
                     <li>
-                        <a href={"/"} className='buttons logout_button'>WYLOGUJ</a>
+                        <a href={"/"} onClick={() => clearRole()} className='buttons logout_button'>WYLOGUJ</a>
                     </li>
                </ul>
             </nav>
             )}
-        case 'a': {
+        case 'admin': {
             return (
             <nav id='header'>
                 <ul>
@@ -53,7 +57,7 @@ const Header = () => {
                         <HeaderButton text={"LISTA LEKARZY"} primaryColor={"black"} secondaryColor={"white"} link={"/show/doctors"} />
                     </li>
                     <li>
-                        <a href={"/"} className='buttons logout_button'>WYLOGUJ</a>
+                        <a href={"/"} onClick={() => clearRole()} className='buttons logout_button'>WYLOGUJ</a>
                     </li>
                 </ul>
             </nav>
@@ -68,9 +72,9 @@ const Header = () => {
                     <li>
                         <HeaderButton text={"KONTAKT"} primaryColor={"black"} secondaryColor={"white"} link={"/contact"} />
                     </li>
-                    <li>
+                    {/* <li>
                         <HeaderButton text={"REJESTRACJA"} primaryColor={"#609C30"} secondaryColor={"white"} link={"/register"} />
-                    </li>
+                    </li> */}
                     <li>
                         <HeaderButton text={"LOGOWANIE"} primaryColor={"#609C30"} secondaryColor={"white"} link={"/login/patient"} />
                     </li>
