@@ -67,6 +67,7 @@ class ReleaseAppointment(BaseModel): # w takim wypadku będzie usuwanie wszystki
 class DoctorCreate(BaseModel):
     first_name: str
     last_name: str
+    password: str
     email: EmailStr
     description: str
 

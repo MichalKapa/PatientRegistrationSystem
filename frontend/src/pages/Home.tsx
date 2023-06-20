@@ -4,6 +4,31 @@ import { useLocation } from 'react-router-dom';
 import "../styles/Home.scss"
 
 function Home() {
+  function getToken() {
+    let name = "access_token=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length).split(" ")[1];
+      }
+    }
+    return "";
+  }
+
+  const token = getToken();
+  if (token !== undefined && token !== ""){
+    console.log(token);
+    localStorage.setItem('token', token);
+    localStorage.setItem('user_role', "patient");
+  }else{
+    localStorage.removeItem('token');
+    localStorage.removeItem('user_role');
+  }
 
   interface Doctor {
     id: number,

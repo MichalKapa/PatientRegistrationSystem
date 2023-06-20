@@ -2,12 +2,14 @@ import "../styles/Header.scss";
 import HeaderButton from "./HeaderButton";
 
 const Header = () => {
-    const role = localStorage.getItem('user_role');
-
-    function clearRole() {
-        localStorage.removeItem('user_role');
+    function handleLogout(){
+        localStorage.removeItem("token");
+        localStorage.removeItem("user_role");
+        document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+        console.log("wylogowano");
     }
-    switch(role) {
+
+    switch(localStorage.getItem("user_role")?.toLowerCase()) {
         case 'patient': {
             return (
             <nav id='header'>
@@ -25,7 +27,7 @@ const Header = () => {
                         <HeaderButton text={"MOJE WIZYTY"} primaryColor={"black"} secondaryColor={"white"} link={"/my/reservations"} />
                     </li>
                     <li>
-                        <a href={"/"} onClick={() => clearRole()} className='buttons logout_button'>WYLOGUJ</a>
+                        <a href={"/"} className='buttons logout_button' onClick={handleLogout}>WYLOGUJ</a>
                     </li>
                 </ul>
             </nav>
@@ -44,7 +46,7 @@ const Header = () => {
                         <HeaderButton text={"KALENDARZ"} primaryColor={"black"} secondaryColor={"white"} link={"/doctor/calendar"} />
                     </li>
                     <li>
-                        <a href={"/"} onClick={() => clearRole()} className='buttons logout_button'>WYLOGUJ</a>
+                        <a href={"/"} className='buttons logout_button' onClick={handleLogout}>WYLOGUJ</a>
                     </li>
                </ul>
             </nav>
@@ -57,7 +59,7 @@ const Header = () => {
                         <HeaderButton text={"LISTA LEKARZY"} primaryColor={"black"} secondaryColor={"white"} link={"/show/doctors"} />
                     </li>
                     <li>
-                        <a href={"/"} onClick={() => clearRole()} className='buttons logout_button'>WYLOGUJ</a>
+                        <a href={"/"} className='buttons logout_button' onClick={handleLogout}>WYLOGUJ</a>
                     </li>
                 </ul>
             </nav>

@@ -37,16 +37,15 @@ const onSubmit = (e: { preventDefault: () => void; }) => {
 
   function loginWithGoogle() {
     axios.get("http://localhost:5050/login/patient")
-      .then((response) => window.location.href = response.data)
+      .then((response) => {
+        document.location.replace(response.data);
+      })
   }
 
   const handleGoogleResponse = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
     if ('accessToken' in response) {
       const { accessToken } = response;
       console.log(response)
-
-      // Send the access token to your backend for signup verification
-      // You can use Axios or any other HTTP library to make the API call
 
       console.log('Access Token:', accessToken);
     }

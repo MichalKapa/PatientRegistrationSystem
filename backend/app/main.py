@@ -17,7 +17,7 @@ from jose import jwt, JWTError
 from app.config import Config
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.context import CryptContext
-
+from app.auth.auth import verify_password, get_password_hash
 import os
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 database_address = os.environ["DB_URL"]
@@ -57,17 +57,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*", "Access-Control-Allow-Origin"],
 )
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
-
-
-def get_password_hash(password):
-    return pwd_context.hash(password)
-
 
 def authenticate_doctor(db, username: str, password: str):
     doctor = utils.get_doctor_login(db, username)
@@ -326,7 +315,7 @@ async def sso_callback(request: Request, db: Session = Depends(get_db)):
 
     redirect_response = RedirectResponse("http://localhost:3000/")
     redirect_response.set_cookie(
-        key="access_token", value=f"Bearer {access_token}", httponly=True
+        key="access_token", value=f"Bearer {access_token}"
     )
     return redirect_response
 

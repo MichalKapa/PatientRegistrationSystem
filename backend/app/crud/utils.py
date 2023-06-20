@@ -3,7 +3,7 @@ from fastapi.exceptions import HTTPException
 from fastapi import status
 from ..models import model
 from ..schemas import schema
-
+from ..auth.auth import get_password_hash
 
 def create_patient(db: Session, email: str):
     db_patient = db.query(model.Patient).filter(model.Patient.email == email).first()
@@ -114,6 +114,8 @@ def get_appointment_patient(db: Session, appointment_id: int):
 def create_doctor(db: Session, doctor: schema.DoctorCreate):
     if db.query(model.Doctor).filter(model.Doctor.email == doctor.email).first():
         return HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email is occupied.")
+    password_plain = doctor.dict().pop("password")
+    doctor.dict()["password_hash"] = get_password_hash(password_plain)
     new_doctor = model.Doctor(**doctor.dict())
     db.add(new_doctor)
     db.commit()
