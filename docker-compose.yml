@@ -26,6 +26,7 @@ services:
       - DB_PASSWORD=postgres
       - DB_NAME=registration_system
       - FRONTEND_URL=localhost:3000
+      - OAUTHLIB_INSECURE_TRANSPORT=1
   frontend:
     build:
       context: ./frontend

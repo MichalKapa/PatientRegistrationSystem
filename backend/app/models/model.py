@@ -11,7 +11,7 @@ from ..database.database import Base
 class Admin(Base):
     __tablename__ = "admin"
     email: Mapped[str] = mapped_column(primary_key=True)
-    password: Mapped[str]
+    password_hash: Mapped[str]
 
 
 class Patient(Base):
@@ -26,11 +26,14 @@ class Patient(Base):
 class Doctor(Base):
     __tablename__ = "doctor"
     doctor_id: Mapped[int] = mapped_column(primary_key=True)
+    password_hash: Mapped[str] = mapped_column()
     first_name: Mapped[str]
     last_name: Mapped[str]
     email: Mapped[str]
     image_source: Mapped[Optional[str]]
     description: Mapped[Optional[str]]
+
+    appointments: Mapped[List["Reservation"]] = relationship(back_populates="doctor")
 
 
 class Reservation(Base):
@@ -41,6 +44,8 @@ class Reservation(Base):
     start_time: Mapped[datetime]
     start_time: Mapped[datetime]
     in_reservating: Mapped[bool] = mapped_column(default=False)
+
+    doctor: Mapped["Doctor"] = relationship()
     
 
 class Timetable(Base):

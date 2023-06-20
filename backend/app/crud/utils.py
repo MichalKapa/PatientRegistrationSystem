@@ -70,6 +70,8 @@ def reserve_appointment(db: Session, patient_email: str, appointment_id: int):
         return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invalid reservation id")
     if patient is None:
         return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Patient not found")
+    if appointment.patient_email is not None:
+        return HTTPException(status_code=status.HTTP_409_CONFLICT, detail="This appointment is already reserved.")
     appointment.patient_email = patient_email
     db.commit()
     db.refresh(appointment)
@@ -93,6 +95,20 @@ def delete_appointment(db: Session, appointment_id: int):
     db.delete(appointment)
     db.commit()
     return True
+
+
+def get_appointment_doctor(db: Session, appointment_id: int):
+    appointment = db.query(model.Reservation).filter(model.Reservation.reservation_id == appointment_id).first()
+    if appointment is None:
+        return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invalid reservation id")
+    return appointment.doctor.email
+
+
+def get_appointment_patient(db: Session, appointment_id: int):
+    appointment = db.query(model.Reservation).filter(model.Reservation.reservation_id == appointment_id).first()
+    if appointment is None:
+        return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invalid reservation id")
+    return appointment.patient_email
 
 
 def create_doctor(db: Session, doctor: schema.DoctorCreate):
@@ -122,3 +138,11 @@ def delete_doctor(db: Session, doctor_id: int):
     db.delete(doctor)
     db.commit()
     return HTTPException(status_code=status.HTTP_200_OK, detail=f"Doctor({doctor_id}) deleted")
+
+
+def get_doctor_login(db: Session, email: str):
+    return db.query(model.Doctor).filter(model.Doctor.email == email).first()
+
+
+def get_admin_login(db: Session, email: str):
+    return db.query(model.Admin).filter(model.Admin.email == email).first()
