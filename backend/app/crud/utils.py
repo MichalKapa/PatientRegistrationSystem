@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from sqlalchemy.orm import Session
 from fastapi.exceptions import HTTPException
 from fastapi import status
@@ -57,6 +59,16 @@ def add_measurement(db: Session, measurement: schema.AddMeasurement):
 
 def add_appointment(db: Session, appointment: schema.AddReservation):
     new_appointment = model.Reservation(**appointment.dict())
+    db.add(new_appointment)
+    db.commit()
+    db.refresh(new_appointment)
+    return new_appointment
+
+
+def create_and_reserve_appointment(db: Session, patient_email: str, doctor_id: int, time: datetime):
+    reserved_appointment = {"doctor_id": doctor_id, "patient_email": patient_email, "start": time,
+                            "end": time+timedelta(minutes=30)}
+    new_appointment = model.Reservation(**reserved_appointment)
     db.add(new_appointment)
     db.commit()
     db.refresh(new_appointment)
@@ -148,3 +160,11 @@ def get_doctor_login(db: Session, email: str):
 
 def get_admin_login(db: Session, email: str):
     return db.query(model.Admin).filter(model.Admin.email == email).first()
+
+
+def set_doctor_profile_photo_url(db: Session, doctor_id: int, url: str):
+    doc = db.query(model.Doctor).filter(model.Doctor.doctor_id == doctor_id)
+    doc.image_source = url
+    db.commit()
+    db.refresh(doc)
+    return doc

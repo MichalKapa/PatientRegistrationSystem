@@ -41,8 +41,8 @@ class Reservation(Base):
     reservation_id: Mapped[int] = mapped_column(primary_key=True)
     doctor_id: Mapped[int] = mapped_column(ForeignKey("doctor.doctor_id"))
     patient_email: Mapped[Optional[str]] = mapped_column(ForeignKey("patient.email"))
-    start_time: Mapped[datetime]
-    start_time: Mapped[datetime]
+    start: Mapped[datetime]
+    end: Mapped[datetime]
     in_reservating: Mapped[bool] = mapped_column(default=False)
 
     doctor: Mapped["Doctor"] = relationship()

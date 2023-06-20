@@ -21,7 +21,7 @@ function Home() {
   }
 
   const token = getToken();
-  if(!(localStorage.getItem("user_role") == "admin" || localStorage.getItem("user_role") == "doctor" )){
+  if(localStorage.getItem("user_role") == "admin" || localStorage.getItem("user_role") == "doctor" ){
     if (token !== undefined && token !== "" && localStorage.getItem("user_role") == ""){
       console.log(token);
       localStorage.setItem('token', token);
