@@ -9,6 +9,37 @@ const Header = () => {
         console.log("wylogowano");
     }
 
+    function getToken() {
+        let name = "access_token=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length).split(" ")[1];
+          }
+        }
+        return "brak";
+      }
+    
+      const token = getToken();
+    
+      if (token !== "brak"){
+          localStorage.setItem('token', token);
+          localStorage.setItem('user_role', "patient");
+      }else if(localStorage.getItem("user_role") == "admin" || localStorage.getItem("user_role") == "doctor"){
+        
+      }
+      else{
+        handleLogout();
+        // console.log("usunięto");
+        // localStorage.removeItem('token');
+        // localStorage.removeItem('user_role');
+      }
+
     switch(localStorage.getItem("user_role")?.toLowerCase()) {
         case 'patient': {
             return (

@@ -121,13 +121,7 @@ const onSubmit = (e: { preventDefault: () => void; }) => {
             <div onClick={()=> loginWithGoogle()} className={`google_login ${role === 'patient' ? '' : 'hidden'}`}>
             <h1>ZALOGUJ Z KONTEM GOOGLE</h1>
           </div>
-          <GoogleLogin
-            clientId="51147604812-bimdr2gb13fqak47u80gmnkpdousuu7b.apps.googleusercontent.com"
-            buttonText="Sign up with Google"
-            onSuccess={handleGoogleResponse}
-            onFailure={handleGoogleFailure}
-            cookiePolicy="single_host_origin"
-          />
+          
         </form>
       </div>
     )
