@@ -49,7 +49,7 @@ function MyReservations() {
                 <div className="reservation_wrapper">
                     <div className='reservation_info' key={index}>
                         <div className='tab1'>
-                            <h1>{reservation.doctorLastName + " " + reservation.doctorFirstName}</h1>
+                            <h1>{"dr " + reservation.doctorLastName + " " + reservation.doctorFirstName}</h1>
                         </div>
                         <div className='tab2'>
                             <h1>{getDateLabel(reservation.dateTime)}</h1>

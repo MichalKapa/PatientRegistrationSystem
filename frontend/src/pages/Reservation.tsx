@@ -137,11 +137,11 @@ function Reservation() {
         let currentTime = new Date(startTime);
     
         while (currentTime <= endTime) {
-          const formattedTime = currentTime.toLocaleTimeString("pl-PL", { hour: '2-digit', minute: '2-digit' });
+          const formattedTime = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
           let isPast = false
           if (dayIndex == 0) {
-            isPast = formattedTime < actualTime.toLocaleDateString("pl-PL", { hour: '2-digit', minute: '2-digit' });
+            isPast = formattedTime < actualTime.toLocaleDateString([], { hour: '2-digit', minute: '2-digit' });
           }
 
           timeSlots.push({ time: formattedTime, isPast, dayIndex });
@@ -196,6 +196,7 @@ function Reservation() {
     const workingDays = [];
     let currentDate = new Date();
   
+    currentDate.setDate(currentDate.getDate() - 1);
     while (workingDays.length < 5) {
       // Move to the next day
       currentDate.setDate(currentDate.getDate() + 1);

@@ -90,11 +90,23 @@ const onSubmit = (e: { preventDefault: () => void; }) => {
     .catch((error) => toast.error("Niepoprawne dane logowania!"));
   }
 
-
   const loginButton = role == 'admin' ?
   (<input id="form_submit" onClick={() => loginAdmin(login, password)} className={`input_buttons accept_button login_button_admin`} type="submit" placeholder="Submit" value="Zaloguj"/>)
   : (<input id="form_submit" onClick={() => loginDoctor(login, password)} className={`input_buttons accept_button login_button_doctor`} type="submit" placeholder="Submit" value="Zaloguj"/>)
   
+  const loginForm = role !== "patient" ?
+  (<><div className='input_container'>
+      <label>LOGIN:</label>
+      <input type={"text"} value={login} required maxLength={30} name='login' placeholder='LOGIN' className='input_buttons' onChange={onChange}/>
+    </div>
+    <div className='input_container'>
+      <label>HASŁO:</label>
+      <input type={"password"} value={password} required maxLength={30} name='password' placeholder='HASŁO' className='input_buttons' onChange={onChange}/>
+    </div>
+    <div className='input_container login_accept'>
+    <div className='column3'></div>
+    {loginButton}
+    </div></>) : (<></>)
   
   if (["admin", "patient", "doctor"].includes(role as string)) {
     return (
@@ -106,22 +118,14 @@ const onSubmit = (e: { preventDefault: () => void; }) => {
         </div>
         <h1 className='main_text login_text'>LOGOWANIE</h1>
         <form id="sign_up_form" onSubmit={onSubmit}>
-          <div className='input_container'>
-              <label>LOGIN:</label>
-              <input type={"text"} value={login} required maxLength={30} name='login' placeholder='LOGIN' className='input_buttons' onChange={onChange}/>
-          </div>
-          <div className='input_container'>
-              <label>HASŁO:</label>
-              <input type={"password"} value={password} required maxLength={30} name='password' placeholder='HASŁO' className='input_buttons' onChange={onChange}/>
-          </div>
-          <div className='input_container login_accept'>
-            <div className='column3'></div>
-            {loginButton}
-          </div>
-            <div onClick={()=> loginWithGoogle()} className={`google_login ${role === 'patient' ? '' : 'hidden'}`}>
+          {loginForm}
+          <div onClick={()=> loginWithGoogle()} className={`google_login ${role === 'patient' ? '' : 'hidden'}`}>
             <h1>ZALOGUJ Z KONTEM GOOGLE</h1>
           </div>
+<<<<<<< HEAD
           
+=======
+>>>>>>> 10e6045310cbce1cdb083db8696ba6f5a8be4cf4
         </form>
       </div>
     )
